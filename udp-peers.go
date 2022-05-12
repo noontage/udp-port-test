@@ -7,10 +7,11 @@ import (
 )
 
 type Peer struct {
-	Key       string       `json:"key"`
-	UpdatedAt time.Time    `json:"updated_at"`
-	Expire    time.Time    `json:"expire"`
-	Addr      *net.UDPAddr `json:"addr"`
+	Key       string    `json:"key"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Expire    time.Time `json:"expire"`
+	PeerIP    string    `json:"peer_ip"`
+	PeerPort  int       `json:"peer_port"`
 }
 
 func NewPeerManager() *PeerManager {
@@ -41,7 +42,8 @@ func (u *PeerManager) Get(key string) Peer {
 		Key:       key,
 		UpdatedAt: d.UpdatedAt,
 		Expire:    d.Expire,
-		Addr:      d.Addr,
+		PeerIP:    d.Addr.IP.String(),
+		PeerPort:  d.Addr.Port,
 	}
 }
 
@@ -68,7 +70,8 @@ func (u *PeerManager) List() []Peer {
 			Key:       k,
 			UpdatedAt: v.UpdatedAt,
 			Expire:    v.Expire,
-			Addr:      v.Addr,
+			PeerIP:    v.Addr.IP.String(),
+			PeerPort:  v.Addr.Port,
 		})
 	}
 
