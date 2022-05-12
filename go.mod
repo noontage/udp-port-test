@@ -1,4 +1,4 @@
-module breaker
+module broker
 
 go 1.18
 

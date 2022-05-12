@@ -1,7 +1,7 @@
 package main
 
 import (
-	"breaker"
+	"broker"
 	"context"
 	"encoding/json"
 	"github.com/labstack/echo/v4"
@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	peerMgr *breaker.PeerManager
+	peerMgr *broker.PeerManager
 )
 
 func main() {
@@ -30,10 +30,10 @@ func hUdpPeers(c echo.Context) error {
 }
 
 func udpServer() {
-	us := breaker.NewUDPServer("0.0.0.0", 39998, onUDP)
+	us := broker.NewUDPServer("0.0.0.0", 39998, onUDP)
 
 	go func() {
-		peerMgr = breaker.NewPeerManager()
+		peerMgr = broker.NewPeerManager()
 		for {
 			peerMgr.Clean()
 			time.Sleep(60 * time.Second)
@@ -45,7 +45,7 @@ func udpServer() {
 	}
 }
 
-func onUDP(ctx context.Context, uq breaker.Request, data []byte) {
+func onUDP(ctx context.Context, uq broker.Request, data []byte) {
 	var req struct {
 		Key string `json:"key"`
 	}
