@@ -30,7 +30,7 @@ func hUdpPeers(c echo.Context) error {
 }
 
 func udpServer() {
-	us := breaker.NewUDPServer("127.0.0.1", 39998, onUDP)
+	us := breaker.NewUDPServer("0.0.0.0", 39998, onUDP)
 
 	go func() {
 		peerMgr = breaker.NewPeerManager()
